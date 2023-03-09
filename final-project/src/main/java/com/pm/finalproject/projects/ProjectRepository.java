@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    @Query(value="SELECT * FROM PROJECT", nativeQuery = true, countQuery = "SELECT count(*) FROM PROJECT")
+//    @Query(value="SELECT * FROM PROJECT", nativeQuery = true, countQuery = "SELECT count(*) FROM PROJECT")
+    @Query(value = "SELECT p FROM Project p")
     List<Project> getAllProjects();
 }

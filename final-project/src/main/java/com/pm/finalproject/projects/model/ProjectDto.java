@@ -1,5 +1,6 @@
 package com.pm.finalproject.projects.model;
 
+import com.pm.finalproject.investment.model.Investment;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Data
@@ -24,7 +27,7 @@ public class ProjectDto {
 
     private String coordinator;
 
-    private String alias;
+    private String projectAlias;
 
     private LocalDate startDate;
 
@@ -39,4 +42,5 @@ public class ProjectDto {
     private BigDecimal grantAmount;
 
     private BigDecimal indirectCostRate;
+
 }

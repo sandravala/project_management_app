@@ -3,12 +3,10 @@ package com.pm.finalproject.projects;
 
 import com.pm.finalproject.projects.model.ProjectDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +19,11 @@ public class ProjectController {
     @GetMapping("/all")
     public List<ProjectDto> getAllProjects() {
         return projectService.getAllProjects();
+    }
+
+    @GetMapping("/{id}")
+    public Optional<ProjectDto> getProjectById(@PathVariable Long id) {
+        return projectService.getProjectById(id);
     }
 
 }

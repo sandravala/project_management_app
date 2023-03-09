@@ -1,5 +1,6 @@
 package com.pm.finalproject.projects.model;
 
+import com.pm.finalproject.investment.model.Investment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Builder
@@ -19,7 +22,7 @@ import java.time.LocalDate;
 public class Project {
 
     @Id
-    @Column(name="ID")
+    @Column(name="PROJECT_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -36,7 +39,7 @@ public class Project {
     private String coordinator;
 
     @Column(name="ALIAS")
-    private String alias; // vidinis projekto pavadinimas
+    private String projectAlias; // vidinis projekto pavadinimas
 
     @Column(name="START_DATE")
     private LocalDate startDate;
@@ -59,6 +62,10 @@ public class Project {
     @Column(name = "INDIRECT_COST_RATE", precision=10, scale=8)
     private BigDecimal indirectCostRate;
 
-    //    private Long paymentRequestPeriod; // mp periodiskumas, gal atskiram entity
+    @OneToMany(
+            mappedBy="project",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Investment> investments = new ArrayList<>();
 
 }
