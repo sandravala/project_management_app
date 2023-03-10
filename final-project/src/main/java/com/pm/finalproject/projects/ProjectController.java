@@ -1,6 +1,7 @@
 package com.pm.finalproject.projects;
 
 
+import com.pm.finalproject.projects.model.Project;
 import com.pm.finalproject.projects.model.ProjectDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,11 @@ public class ProjectController {
     @GetMapping("/{id}")
     public Optional<ProjectDto> getProjectById(@PathVariable Long id) {
         return projectService.getProjectById(id);
+    }
+
+    @PostMapping("/save")
+    public Project createProduct(@RequestBody ProjectDto projectDto) {
+        return projectService.saveProject(projectDto);
     }
 
 }

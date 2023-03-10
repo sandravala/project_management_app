@@ -1,4 +1,4 @@
-package com.pm.finalproject.investment.model;
+package com.pm.finalproject.projects.model;
 
 import com.pm.finalproject.projects.model.Project;
 import jakarta.persistence.*;

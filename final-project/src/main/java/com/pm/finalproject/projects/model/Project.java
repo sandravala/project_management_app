@@ -1,6 +1,5 @@
 package com.pm.finalproject.projects.model;
 
-import com.pm.finalproject.investment.model.Investment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -66,6 +65,7 @@ public class Project {
             mappedBy="project",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
+    @OrderBy("procurementDeadline")
     private List<Investment> investments = new ArrayList<>();
 
 }
