@@ -1,6 +1,6 @@
 package com.pm.finalproject.projects.model;
 
-import jakarta.persistence.EntityManager;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
