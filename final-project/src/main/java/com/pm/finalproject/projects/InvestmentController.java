@@ -10,13 +10,13 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/investmentList")
+@RequestMapping("/projects")
 @CrossOrigin("*")
 public class InvestmentController {
 
     private final InvestmentService investmentService;
 
-    @GetMapping("/{projectId}")
+    @GetMapping("/{projectId}/iList")
     public List<InvestmentDto> getAllByProjectId(@PathVariable Long projectId) {
         return investmentService.getAllByProjectId(projectId);
     }

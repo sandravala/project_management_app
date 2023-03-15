@@ -25,11 +25,10 @@ public class ProjectDto {
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalDate contractSigningDate;
-    private BigDecimal eligibleCosts;
+    private BigDecimal eligibleCosts; // amount
     private BigDecimal fundingRate;
     private BigDecimal grantAmount;
     private BigDecimal indirectCostRate;
-    private EntityManager entityManager;
     private List<InvestmentDto> investmentDtos;
 
 }
