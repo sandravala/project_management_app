@@ -1,5 +1,6 @@
 package com.pm.finalproject.projects.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -66,10 +68,26 @@ public class Project {
     private BigDecimal indirectCostRate;
 
     @OneToMany(
+            fetch = FetchType.LAZY,
             mappedBy="project",
-            cascade = {CascadeType.PERSIST}
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            orphanRemoval = true
     )
     @OrderBy("procurementDeadline")
-    private List<Investment> investments = new ArrayList<>();
+    @JsonManagedReference
+    private List<Investment> investments;
+
+    public void addInvestment(Investment investment) {
+        if(investments == null)
+            investments = new ArrayList<>();
+        investments.add(investment);
+    }
+
+    public void addInvestments(List<Investment> iList) {
+        if(investments == null)
+            investments = new ArrayList<>();
+        investments.addAll(iList);
+    }
+
 
 }

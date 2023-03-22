@@ -34,6 +34,7 @@ public class ProjectService {
 
     public Project saveProject(ProjectDto projectDto) {
         Project projectToSave = buildObjects.saveProject(projectDto);
+        projectToSave.addInvestments(projectRepository.getReferenceById(projectToSave.getId()).getInvestments());
         return projectRepository.save(projectToSave);
     }
 

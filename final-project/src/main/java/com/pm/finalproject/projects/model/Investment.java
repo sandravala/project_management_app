@@ -1,5 +1,6 @@
 package com.pm.finalproject.projects.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,7 +47,8 @@ public class Investment {
     @Column(name="PROCUREMENT_STATE")
     private String procurementState; // planuojama || vykdoma || ivykdyta (pasirasyta sutartis)|| atsisakyta
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="PROJECT_ID", nullable = false)
+    @JsonBackReference
     private Project project;
 }

@@ -38,6 +38,7 @@ public class MapToDtos {
                 .collect(Collectors.toList());
     }
 
+
     public List<InvestmentDto> investmentToDto(Collection<Investment> entities) {
         return entities.stream()
                 .map(o -> InvestmentDto.builder()

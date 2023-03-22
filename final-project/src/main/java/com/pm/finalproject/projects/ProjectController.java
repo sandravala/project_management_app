@@ -28,9 +28,9 @@ public class ProjectController {
     }
 
     @PostMapping("/save")
-    public Project createProject(@RequestBody ProjectDto projectDto) {
-
-        return projectService.saveProject(projectDto);
+    public Optional<ProjectDto> createProject(@RequestBody ProjectDto projectDto) {
+        projectService.saveProject(projectDto);
+        return getProjectById(projectDto.getId());
     }
 
 }
