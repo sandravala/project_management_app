@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -18,6 +20,8 @@ import java.util.List;
 @Table(name="PROJECT")
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicInsert
+@DynamicUpdate
 public class Project {
 
     @Id
@@ -63,8 +67,8 @@ public class Project {
 
     @OneToMany(
             mappedBy="project",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            cascade = {CascadeType.PERSIST}
+    )
     @OrderBy("procurementDeadline")
     private List<Investment> investments = new ArrayList<>();
 

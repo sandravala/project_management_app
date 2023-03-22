@@ -25,7 +25,6 @@ public class InvestmentDto {
     private BigDecimal fundingAmount;
     private LocalDate procurementDeadline;
     private String procurementState;
-
     private Long projectId;
 
 }

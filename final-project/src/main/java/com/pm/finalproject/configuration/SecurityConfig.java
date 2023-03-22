@@ -1,4 +1,5 @@
 package com.pm.finalproject.configuration;
+import com.pm.finalproject.users.JwtService;
 import org.springframework.boot.autoconfigure.h2.H2ConsoleProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,13 +9,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtService jwtService) throws Exception {
 
         //nuimam csrf filtra
         http
@@ -30,12 +32,16 @@ public class SecurityConfig {
         http
                 .authorizeRequests()
                 .antMatchers(
-                        "/projects/all",
+                        "/projects/**",
                         "/login"
                 ).permitAll()
 //                .antMatchers("/projects/**").access("hasRole('ROLE_PM')")
                 .anyRequest()
                 .authenticated();
+
+        // autorizacijos filtras, kuris suparsina jwt tokena
+        http.addFilterBefore(new JwtAuthorizationFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 

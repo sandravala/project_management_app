@@ -28,7 +28,8 @@ public class ProjectController {
     }
 
     @PostMapping("/save")
-    public Project createProduct(@RequestBody ProjectDto projectDto) {
+    public Project createProject(@RequestBody ProjectDto projectDto) {
+
         return projectService.saveProject(projectDto);
     }
 

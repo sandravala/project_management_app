@@ -20,7 +20,6 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final MapToDtos mapToDtos;
-
     private final BuildObjects buildObjects;
 
     public List<ProjectDto> getAllProjects() {

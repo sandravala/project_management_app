@@ -57,7 +57,7 @@ VALUES
     (1, 'Sandra', 'V', 'admin@admin.com', '{noop}sandra'),
 
     -- user@user.com:user -- PM, ADMIN
-    (2, 'Lina', 'S', 'user@user.com', '{noop}lina');
+    (2, 'Lina', 'S', 'user@user.com', '{noop}lina'),
 
     -- client@client.com:client -- CLIENT
     (3, 'Jurga', 'A', 'client@client.com', '{noop}jurga');
