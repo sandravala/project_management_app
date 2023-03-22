@@ -50,3 +50,27 @@ insert into INVESTMENT (PROCUREMENT_TYPE, NAME, PLANNED_COST_AMOUNT, ACTUAL_CONT
 insert into INVESTMENT (PROCUREMENT_TYPE, NAME, PLANNED_COST_AMOUNT, ACTUAL_CONTRACT_COST, FUNDING_RATE, FUNDING_AMOUNT, PROCUREMENT_DEADLINE, PROCUREMENT_STATE, PROJECT_ID) values ('Pirkimas iš pasirinkto tiekėjo', 'Plexiglass', 134918, 88750, 0.52, 46150.0, '2022-08-25', 'atsisakyta', 6);
 insert into INVESTMENT (PROCUREMENT_TYPE, NAME, PLANNED_COST_AMOUNT, ACTUAL_CONTRACT_COST, FUNDING_RATE, FUNDING_AMOUNT, PROCUREMENT_DEADLINE, PROCUREMENT_STATE, PROJECT_ID) values ('Pirkimas iš pasirinkto tiekėjo', 'Wood', 302323, 349329, 0.17, 51394.91, '2022-08-04', 'vykdoma', 13);
 insert into INVESTMENT (PROCUREMENT_TYPE, NAME, PLANNED_COST_AMOUNT, ACTUAL_CONTRACT_COST, FUNDING_RATE, FUNDING_AMOUNT, PROCUREMENT_DEADLINE, PROCUREMENT_STATE, PROJECT_ID) values ('Konkursas', 'Granite', 79719, 297347, 0.45, 35873.55, '2022-04-14', 'planuojama', 11);
+
+INSERT INTO APP_USER (id, name, surname, email, password)
+VALUES
+    -- admin@admin.com:admin -- ADMIN
+    (1, 'Sandra', 'V', 'admin@admin.com', '{noop}sandra'),
+
+    -- user@user.com:user -- PM, ADMIN
+    (2, 'Lina', 'S', 'user@user.com', '{noop}lina');
+
+    -- client@client.com:client -- CLIENT
+    (3, 'Jurga', 'A', 'client@client.com', '{noop}jurga');
+
+INSERT INTO ROLE (name)
+VALUES
+    ('ADMIN'),
+    ('PM'),
+    ('CLIENT');
+
+INSERT INTO APP_USER_ROLES (user_id, roles_name)
+VALUES
+    (1, 'ADMIN'),
+    (2, 'PM'),
+    (2, 'ADMIN'),
+    (3, 'CLIENT');

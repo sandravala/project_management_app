@@ -1,23 +1,15 @@
 package com.pm.finalproject.users.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
-@Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
 public class UserDto {
-
-    @NotBlank
+    private String name;
+    private String surname;
     private String email;
-    @NotBlank
-    private String password;
-
-
+    private Set<String> roles;
 }
-
