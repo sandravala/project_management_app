@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Builder
 @Data
@@ -51,4 +52,10 @@ public class Investment {
     @JoinColumn(name="PROJECT_ID", nullable = false)
     @JsonBackReference
     private Project project;
+
+//    public void addProject(Project project) {
+//        if(project == null)
+//            setProject(project);
+//    }
+
 }

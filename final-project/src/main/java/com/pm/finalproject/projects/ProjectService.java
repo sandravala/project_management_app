@@ -24,18 +24,19 @@ public class ProjectService {
     private final BuildObjects buildObjects;
 
     public List<ProjectDto> getAllProjects() {
-        return mapToDtos.projectToDto(projectRepository.getAllProjects());
+        return mapToDtos.projectListToDto(projectRepository.getAllProjects());
     }
 
     public Optional<ProjectDto> getProjectById(Long id) {
-        return mapToDtos.projectToDto(projectRepository.findById(id).stream().toList())
+        return mapToDtos.projectListToDto(projectRepository.findById(id).stream().toList())
                .stream()
                .findFirst();
     }
 
     public Project saveProject(ProjectDto projectDto) {
         Project projectToSave = buildObjects.saveProject(projectDto);
-        if (projectRepository.count() > projectToSave.getId()) {
+        boolean isNewProject = projectToSave.getId() == null;
+        if (!isNewProject) {
             projectToSave.addInvestments(projectRepository.getReferenceById(projectToSave.getId()).getInvestments());
         } else {
             projectToSave.addInvestments(new ArrayList<>());

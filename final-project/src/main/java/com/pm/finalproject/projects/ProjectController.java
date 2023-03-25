@@ -16,6 +16,7 @@ import java.util.Optional;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final MapToDtos mapToDtos;
 
     @GetMapping("/all")
     public List<ProjectDto> getAllProjects() {
@@ -28,9 +29,9 @@ public class ProjectController {
     }
 
     @PostMapping("/save")
-    public Optional<ProjectDto> createProject(@RequestBody ProjectDto projectDto) {
+    public ProjectDto createProject(@RequestBody ProjectDto projectDto) {
         projectService.saveProject(projectDto);
-        return getProjectById(projectService.saveProject(projectDto).getId());
+        return mapToDtos.projectToDto(projectService.saveProject(projectDto));
     }
 
 }

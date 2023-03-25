@@ -23,7 +23,7 @@ public class BuildObjects {
     public Project saveProject(ProjectDto projectDto) {
 
         return Project.builder()
-                .id(projectDto.getId() == null ? projectRepository.count() : projectDto.getId())
+                .id(projectDto.getId())
                 .projectNo(projectDto.getProjectNo())
                 .name(projectDto.getName())
                 .client(projectDto.getClient())
@@ -39,7 +39,7 @@ public class BuildObjects {
                 .build();
     }
 
-    public Investment saveInvestment(InvestmentDto iDto) {
+    public Investment saveInvestment(InvestmentDto iDto, Long projectId) {
         return Investment.builder()
                 .procurementType(iDto.getProcurementType())
                 .name(iDto.getName())
@@ -49,7 +49,7 @@ public class BuildObjects {
                 .fundingAmount(iDto.getFundingAmount())
                 .procurementDeadline(iDto.getProcurementDeadline())
                 .procurementState(iDto.getProcurementState())
-                .project(projectRepository.findById(iDto.getProjectId()).get())
+                .project(projectRepository.findById(projectId).get())
                 .build();
     }
 
