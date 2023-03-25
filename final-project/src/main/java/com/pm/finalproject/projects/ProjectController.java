@@ -30,7 +30,7 @@ public class ProjectController {
     @PostMapping("/save")
     public Optional<ProjectDto> createProject(@RequestBody ProjectDto projectDto) {
         projectService.saveProject(projectDto);
-        return getProjectById(projectDto.getId());
+        return getProjectById(projectService.saveProject(projectDto).getId());
     }
 
 }

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +35,11 @@ public class ProjectService {
 
     public Project saveProject(ProjectDto projectDto) {
         Project projectToSave = buildObjects.saveProject(projectDto);
-        projectToSave.addInvestments(projectRepository.getReferenceById(projectToSave.getId()).getInvestments());
+        if (projectRepository.count() > projectToSave.getId()) {
+            projectToSave.addInvestments(projectRepository.getReferenceById(projectToSave.getId()).getInvestments());
+        } else {
+            projectToSave.addInvestments(new ArrayList<>());
+        }
         return projectRepository.save(projectToSave);
     }
 

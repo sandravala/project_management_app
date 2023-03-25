@@ -23,7 +23,7 @@ public class BuildObjects {
     public Project saveProject(ProjectDto projectDto) {
 
         return Project.builder()
-                .id(projectDto.getId())
+                .id(projectDto.getId() == null ? projectRepository.count() : projectDto.getId())
                 .projectNo(projectDto.getProjectNo())
                 .name(projectDto.getName())
                 .client(projectDto.getClient())

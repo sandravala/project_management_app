@@ -12,7 +12,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 
@@ -70,7 +69,7 @@ public class Project {
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy="project",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     @OrderBy("procurementDeadline")
