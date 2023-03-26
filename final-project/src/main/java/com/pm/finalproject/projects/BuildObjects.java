@@ -41,6 +41,7 @@ public class BuildObjects {
 
     public Investment saveInvestment(InvestmentDto iDto, Long projectId) {
         return Investment.builder()
+                .id(iDto.getId())
                 .procurementType(iDto.getProcurementType())
                 .name(iDto.getName())
                 .plannedCostAmount(iDto.getPlannedCostAmount())
