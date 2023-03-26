@@ -45,4 +45,9 @@ public class ProjectService {
     }
 
 
+    public String deleteProjectById(Long id) {
+        String before = "size before: " + projectRepository.getAllProjects().size() + ", size after: ";
+        projectRepository.deleteById(id);
+        return before + projectRepository.getAllProjects().size();
+    }
 }

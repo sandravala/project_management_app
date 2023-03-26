@@ -28,6 +28,11 @@ public class ProjectController {
         return projectService.getProjectById(id);
     }
 
+    @DeleteMapping
+    public String deleteProjectById(@RequestParam Long id) {
+        return projectService.deleteProjectById(id);
+    }
+
     @PostMapping("/save")
     public ProjectDto createProject(@RequestBody ProjectDto projectDto) {
         projectService.saveProject(projectDto);
