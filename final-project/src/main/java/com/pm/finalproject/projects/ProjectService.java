@@ -4,6 +4,8 @@ import com.pm.finalproject.projects.model.Investment;
 import com.pm.finalproject.projects.model.InvestmentDto;
 import com.pm.finalproject.projects.model.Project;
 import com.pm.finalproject.projects.model.ProjectDto;
+import com.pm.finalproject.users.UserRepository;
+import com.pm.finalproject.users.model.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class ProjectService {
     private final MapToDtos mapToDtos;
     private final BuildObjects buildObjects;
 
+    private final UserRepository userRepository;
+
     public List<ProjectDto> getAllProjects() {
         return mapToDtos.projectListToDto(projectRepository.getAllProjects());
     }
@@ -31,6 +35,12 @@ public class ProjectService {
         return mapToDtos.projectListToDto(projectRepository.findById(id).stream().toList())
                .stream()
                .findFirst();
+    }
+
+    public List<ProjectDto> getProjectByCoordinator(Long id) {
+        Boolean userExists = userRepository.existsById(id);
+        List<ProjectDto> filteredList = userExists ? mapToDtos.projectListToDto(projectRepository.getProjectsByCoordinator(userRepository.getReferenceById(id).getEmail())) : new ArrayList<>();
+        return filteredList;
     }
 
     public Project saveProject(ProjectDto projectDto) {
@@ -50,4 +60,6 @@ public class ProjectService {
         projectRepository.deleteById(id);
         return before + projectRepository.getAllProjects().size();
     }
+
+
 }

@@ -25,6 +25,7 @@ public class JwtService {
                 .setIssuer("pm-app-back-end")
                 .setSubject(user.getEmail())
                 .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + 900000)) // 15 min
                 .claim(ROLES_CLAIM, user.getRoles().stream()
                         .map(Role::getName)
                         .collect(Collectors.toSet()))

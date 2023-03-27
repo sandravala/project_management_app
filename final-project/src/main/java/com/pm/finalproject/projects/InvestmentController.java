@@ -23,7 +23,7 @@ public class InvestmentController {
         return investmentService.getAllByProjectId(projectId);
     }
 
-    @PostMapping("/{projectId}")
+    @PostMapping("/{projectId}/iList")
     public InvestmentDto saveInvestment(@PathVariable Long projectId,
             @RequestBody InvestmentDto investmentDto) {
         return mapToDtos.investmentToDto(investmentService.saveInvestment(investmentDto, projectId));

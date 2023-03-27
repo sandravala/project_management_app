@@ -3,7 +3,10 @@ package com.pm.finalproject.projects;
 
 import com.pm.finalproject.projects.model.Project;
 import com.pm.finalproject.projects.model.ProjectDto;
+import com.pm.finalproject.users.model.User;
+import com.pm.finalproject.users.model.UserDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +21,14 @@ public class ProjectController {
     private final ProjectService projectService;
     private final MapToDtos mapToDtos;
 
-    @GetMapping("/all")
+    @GetMapping
     public List<ProjectDto> getAllProjects() {
         return projectService.getAllProjects();
+    }
+
+    @GetMapping("/my")
+    public List<ProjectDto> getProjectsByCoordinator(@RequestParam Long id) {
+        return projectService.getProjectByCoordinator(id);
     }
 
     @GetMapping("/{id}")
