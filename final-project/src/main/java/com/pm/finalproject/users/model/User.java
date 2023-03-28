@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Builder
@@ -31,8 +32,21 @@ public class User implements UserDetails {
 
     private String surname;
 
+    private String organisation;
+
     @ManyToMany
     private Set<Role> roles;
+
+    public void addRole(Role role) {
+        if (roles == null)
+            roles = new HashSet<>();
+        roles.add(role);
+    }
+
+    public void setRoles(Set<Role> newRoles) {
+        roles = new HashSet<>();
+        roles.addAll(newRoles);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

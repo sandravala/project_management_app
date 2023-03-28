@@ -29,8 +29,6 @@ public class InvestmentService {
 
     public Investment saveInvestment(InvestmentDto investmentDto, Long projectId) {
         Investment investmentToSave = buildObjects.saveInvestment(investmentDto, projectId);
-//        investmentToSave.addProject(projectRepository.getReferenceById(projectId));
-
         return investmentRepository.save(investmentToSave);
     }
 

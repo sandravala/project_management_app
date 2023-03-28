@@ -33,7 +33,9 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers(
                         "/projects/**",
-                        "/login"
+                        "/login",
+                        "/user",
+                        "/roles/*"
                 ).permitAll()
 //                .antMatchers("/projects/**").access("hasRole('ROLE_PM')")
                 .anyRequest()

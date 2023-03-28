@@ -29,6 +29,7 @@ public class LoginController {
                 .name(user.getName())
                 .email(user.getEmail())
                 .surname(user.getSurname())
+                .organisation(user.getOrganisation())
                 .roles(user.getRoles().stream()
                         .map(Role::getName)
                         .collect(Collectors.toSet()))
