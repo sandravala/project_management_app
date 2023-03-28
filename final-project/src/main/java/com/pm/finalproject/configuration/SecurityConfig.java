@@ -35,7 +35,8 @@ public class SecurityConfig {
                         "/projects/**",
                         "/login",
                         "/user",
-                        "/roles/*"
+                        "/roles/*",
+                        "/users"
                 ).permitAll()
 //                .antMatchers("/projects/**").access("hasRole('ROLE_PM')")
                 .anyRequest()

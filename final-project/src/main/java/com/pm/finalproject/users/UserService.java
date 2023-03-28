@@ -57,8 +57,6 @@ public class UserService implements UserDetailsService {
         return result;
     }
 
-
-
     public Set<Role> setRoles(Long userId, List<String> roles) {
 
             User user = userRepository.getReferenceById(userId);
@@ -73,8 +71,21 @@ public class UserService implements UserDetailsService {
 
     }
 
+    public List<UserDto> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(u -> UserDto.builder()
+                                .id(u.getId())
+                                .name(u.getName())
+                                .surname(u.getSurname())
+                                .email(u.getEmail())
+                                .organisation(u.getOrganisation())
+                                .roles(u.getRoles().stream().map(role -> role.getName()).collect(Collectors.toSet()))
+                        .build()
+                        ).collect(Collectors.toList());
+    }
 
     private Optional<User> validateUser(String email) {
+
         return userRepository.findByEmail(email);
     }
 }

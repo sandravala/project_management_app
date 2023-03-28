@@ -26,4 +26,10 @@ public class UserController {
     public Set<Role> addRoles(@PathVariable Long userId, @RequestBody List<String> roles) {
         return userService.setRoles(userId, roles);
     }
+
+    @GetMapping("/users")
+    public List<UserDto> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
 }
