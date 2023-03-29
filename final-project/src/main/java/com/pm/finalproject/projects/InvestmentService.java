@@ -32,5 +32,11 @@ public class InvestmentService {
         return investmentRepository.save(investmentToSave);
     }
 
+    public String deleteInvestmentById(Long id) {
+        String before = "size before: " + investmentRepository.findAll().size() + ", size after: ";
+        investmentRepository.deleteById(id);
+        return before + investmentRepository.findAll().size();
+    }
+
 
 }
