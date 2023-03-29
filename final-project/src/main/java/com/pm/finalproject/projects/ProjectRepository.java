@@ -21,4 +21,5 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query(value= "SELECT p FROM Project p WHERE p.coordinator = :email ORDER BY p.projectAlias ASC")
     List<Project> getProjectsByCoordinator(@Param("email") String email);
 
+
 }

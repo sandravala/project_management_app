@@ -26,21 +26,25 @@ public class ProjectController {
         return projectService.getAllProjects();
     }
 
+    //admin ir pm
     @GetMapping("/my")
     public List<ProjectDto> getProjectsByCoordinator(@RequestParam Long id) {
         return projectService.getProjectByCoordinator(id);
     }
 
+    //admin, pm, client
     @GetMapping("/{id}")
     public Optional<ProjectDto> getProjectById(@PathVariable Long id) {
         return projectService.getProjectById(id);
     }
 
+    //admin
     @DeleteMapping
     public String deleteProjectById(@RequestParam Long id) {
         return projectService.deleteProjectById(id);
     }
 
+    //admin
     @PostMapping("/save")
     public ProjectDto createProject(@RequestBody ProjectDto projectDto) {
         projectService.saveProject(projectDto);

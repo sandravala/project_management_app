@@ -32,19 +32,24 @@ public class SecurityConfig {
         http
                 .authorizeRequests()
                 .antMatchers(
-                        "/projects/**",
+//                        "/projects/**",
                         "/login",
                         "/user",
-                        "/roles/*",
-                        "/users"
+                        "/"
+//                        "/user",
+//                        "/roles/*",
+//                        "/users"
                 ).permitAll()
-//                .antMatchers("/projects/**").access("hasRole('ROLE_PM')")
+                .antMatchers("/projects/**").hasAnyRole("ADMIN", "PM", "CLIENT")
+                .antMatchers("/roles/{userId}").hasRole("ADMIN")
+                .antMatchers("/users").hasRole("ADMIN")
+                .antMatchers("/projects/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated();
 
         // autorizacijos filtras, kuris suparsina jwt tokena
         http.addFilterBefore(new JwtAuthorizationFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
-
+        http.cors();
         return http.build();
     }
 

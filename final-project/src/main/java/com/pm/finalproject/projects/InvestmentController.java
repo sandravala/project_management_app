@@ -19,17 +19,20 @@ public class InvestmentController {
     private final InvestmentService investmentService;
     private final MapToDtos mapToDtos;
 
+    //admin, pm, client
     @GetMapping("/{projectId}/iList")
     public List<InvestmentDto> getAllByProjectId(@PathVariable Long projectId) {
         return investmentService.getAllByProjectId(projectId);
     }
 
+    //admin, pm
     @PostMapping("/{projectId}/iList")
     public InvestmentDto saveInvestment(@PathVariable Long projectId,
             @RequestBody InvestmentDto investmentDto) {
         return mapToDtos.investmentToDto(investmentService.saveInvestment(investmentDto, projectId));
     }
 
+    //admin, pm
     @DeleteMapping("/iList")
     public String deleteInvestmentById(@RequestParam Long id) {
         return investmentService.deleteInvestmentById(id);
