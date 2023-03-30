@@ -6,17 +6,27 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
 
     private static final String ROLES_CLAIM = "roles";
+
+    private final RoleRepository roleRepository;
     private byte[] secretKey = "HbVWjy4LaI71OAUzr8rD7478lb7pwOtsuIWZHIK9VWKkfI3linaS8u9b0yuF8N2sxLKv02Q+gZcYZcUo+OM2oA==".getBytes();
+
+    public JwtService(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
+
     public String createToken(User user) {
 
         Date now = new Date();
@@ -25,7 +35,7 @@ public class JwtService {
                 .setIssuer("pm-app-back-end")
                 .setSubject(user.getEmail())
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + 900000)) // 15 min
+                .setExpiration(new Date(now.getTime() + 1800000)) // 30 min
                 .claim(ROLES_CLAIM, user.getRoles().stream()
                         .map(Role::getName)
                         .collect(Collectors.toSet()))
@@ -41,12 +51,15 @@ public class JwtService {
                                 .parseClaimsJws(jwt)
                 .getBody();
 
-        return User.builder()
+        Set<Role> roleSet = ((List<String>) body.get(ROLES_CLAIM)).stream()
+                .map(role -> roleRepository.findByName(role).get())
+                .collect(Collectors.toSet());
+
+        User user = User.builder()
                 .email(body.getSubject())
-                .roles(((List<String>) body.get(ROLES_CLAIM)).stream()
-                        .map(Role::new)
-                        .collect(Collectors.toSet())) // ["ADMIN", "USER", ...] -> [new Role(...), new Role(...)]
+                .roles(roleSet) // ["ADMIN", "USER", ...] -> [new Role(...), new Role(...)]
                 .build();
+        return user;
     }
 
 }

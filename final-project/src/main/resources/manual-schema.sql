@@ -1,3 +1,7 @@
+# CREATE DATABASE IF NOT EXISTS pm_app;
+#
+# USE pm_app;
+
 CREATE TABLE PROJECT (
     PROJECT_ID         INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     PROJECT_NUMBER     VARCHAR(255),
@@ -26,3 +30,25 @@ create table INVESTMENT (
                             PROCUREMENT_STATE VARCHAR(30),
                             PROJECT_ID INT
 );
+
+
+create table APP_USER (
+                          ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+                          email VARCHAR(255),
+                          name VARCHAR(255),
+                          organisation VARCHAR(255),
+                          password VARCHAR(255),
+                          surname VARCHAR(255)
+);
+
+create table ROLE (
+                      ID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+                      NAME varchar(255) not null
+);
+
+create table APP_USER_ROLES (
+                                user_id bigint not null,
+                                roles_name varchar(255) not null
+);
+
+

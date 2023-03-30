@@ -1,5 +1,6 @@
 package com.pm.finalproject.users.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,7 +35,12 @@ public class User implements UserDetails {
 
     private String organisation;
 
-    @ManyToMany
+
+    @ManyToMany(targetEntity = Role.class, cascade = { CascadeType.ALL })
+    @JoinTable(name = "APP_USER_ROLES",
+            joinColumns = { @JoinColumn(name = "USER_ID") },
+            inverseJoinColumns = { @JoinColumn(name = "ROLES_NAME") })
+    @JsonManagedReference
     private Set<Role> roles;
 
     public void addRole(Role role) {

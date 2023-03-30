@@ -4,7 +4,10 @@ import com.pm.finalproject.users.model.*;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +27,7 @@ public class LoginController {
     @PostMapping("/login")
     public LoginResponse userLogin(@RequestBody @Valid LoginRequest loginRequest) {
             User user = authenticate(loginRequest);
+
         return new LoginResponse(generateJwt(user), UserDto.builder()
                 .id(user.getId())
                 .name(user.getName())
@@ -41,6 +45,7 @@ public class LoginController {
     }
 
     private User authenticate(LoginRequest loginRequest) {
+
         return (User) authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()))
                 .getPrincipal();

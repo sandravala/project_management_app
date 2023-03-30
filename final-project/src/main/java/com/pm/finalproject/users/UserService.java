@@ -3,17 +3,17 @@ package com.pm.finalproject.users;
 import com.pm.finalproject.users.model.Role;
 import com.pm.finalproject.users.model.SignupRequest;
 import com.pm.finalproject.users.model.UserDto;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.pm.finalproject.users.model.User;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import javax.transaction.Transactional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+
     @Override
     public User loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email)
@@ -33,40 +35,43 @@ public class UserService implements UserDetailsService {
 
         if(!validateUser(newUser.getEmail()).isPresent()) {
 
-            Set<String> newRoles = new HashSet<>();
-            newRoles.add("NEW");
+            Set<Role> roles = new HashSet<>();
+            roles.add(roleRepository.findByName("NEW").get());
 
-            String encoded = new BCryptPasswordEncoder().encode(newUser.getPassword());
 
             User createdUser = userRepository.save(User.builder()
                     .name(newUser.getName())
                     .email(newUser.getEmail())
                     .surname(newUser.getSurname())
                     .organisation(newUser.getOrganisation())
-                    .password(encoded)
-                    .roles(newRoles.stream()
-                            .map(Role::new)
-                            .collect(Collectors.toSet()))
+                    .password("{noop}"+newUser.getPassword())
+                    .roles(roles)
                     .build());
 
-            result += "created";
+            roleRepository.findByName("NEW").get().addUser(createdUser);
+            result += "userCreated";
         } else {
             result += "exists";
         }
-
         return result;
     }
 
+
+    @Transactional
     public Set<Role> setRoles(Long userId, List<String> roles) {
 
             User user = userRepository.getReferenceById(userId);
+            Set<User> userSet = new HashSet<>();
+            userSet.add(user);
 
             Set<Role> userRolesSet = roles.stream()
-                    .map(Role::new)
+                    .map(role -> roleRepository.findByName(role).get())
                     .collect(Collectors.toSet());
 
             user.setRoles(userRolesSet);
 
+            if( userRolesSet.iterator().hasNext())
+                userRolesSet.iterator().next().setUsers(userSet);
         return user.getRoles();
 
     }

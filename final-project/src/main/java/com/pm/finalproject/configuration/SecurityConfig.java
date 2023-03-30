@@ -1,15 +1,22 @@
 package com.pm.finalproject.configuration;
 import com.pm.finalproject.users.JwtService;
-import org.springframework.boot.autoconfigure.h2.H2ConsoleProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.annotation.Resource;
 
 
 @Configuration
@@ -35,7 +42,8 @@ public class SecurityConfig {
 //                        "/projects/**",
                         "/login",
                         "/user",
-                        "/"
+                        "/",
+"/home"
 //                        "/user",
 //                        "/roles/*",
 //                        "/users"
@@ -43,7 +51,6 @@ public class SecurityConfig {
                 .antMatchers("/projects/**").hasAnyRole("ADMIN", "PM", "CLIENT")
                 .antMatchers("/roles/{userId}").hasRole("ADMIN")
                 .antMatchers("/users").hasRole("ADMIN")
-                .antMatchers("/projects/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated();
 
@@ -54,17 +61,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer(H2ConsoleProperties properties) {
+    public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web
                 .ignoring()
-                .antMatchers(properties.getPath() + "/**");
+                .antMatchers( "/h2/**");
     }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
 
 
 }

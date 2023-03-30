@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -44,11 +46,29 @@ public class ProjectService {
     }
 
     public Project saveProject(ProjectDto projectDto) {
-        Project projectToSave = buildObjects.saveProject(projectDto);
-        boolean isNewProject = projectToSave.getId() == null;
+        Project projectToSave;
+        boolean isNewProject = projectDto.getId() == null;
         if (!isNewProject) {
-            projectToSave.addInvestments(projectRepository.getReferenceById(projectToSave.getId()).getInvestments());
+            Project projectToEdit = projectRepository.findById(projectDto.getId()).get();
+
+            projectToEdit.setProjectNo(projectDto.getProjectNo());
+            projectToEdit.setName(projectDto.getName());
+            projectToEdit.setClient(projectDto.getClient());
+            projectToEdit.setCoordinator(projectDto.getCoordinator());
+            projectToEdit.setProjectAlias(projectDto.getProjectAlias());
+            projectToEdit.setStartDate(projectDto.getStartDate());
+            projectToEdit.setEndDate(projectDto.getEndDate());
+            projectToEdit.setContractSigningDate(projectDto.getContractSigningDate());
+            projectToEdit.setEligibleCosts(projectDto.getEligibleCosts());
+            projectToEdit.setFundingRate(projectDto.getFundingRate());
+            projectToEdit.setGrantAmount(projectDto.getGrantAmount());
+            projectToEdit.setIndirectCostRate(projectDto.getIndirectCostRate());
+
+            projectToEdit.addInvestments(projectRepository.getReferenceById(projectDto.getId()).getInvestments());
+            projectToSave = projectToEdit;
+
         } else {
+            projectToSave = buildObjects.saveProject(projectDto);
             projectToSave.addInvestments(new ArrayList<>());
         }
         return projectRepository.save(projectToSave);

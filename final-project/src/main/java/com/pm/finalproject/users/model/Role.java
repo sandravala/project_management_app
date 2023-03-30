@@ -1,14 +1,12 @@
 package com.pm.finalproject.users.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,8 +21,19 @@ public class Role implements GrantedAuthority {
     @Id
     private String name;
 
+    @ManyToMany(mappedBy = "roles", cascade = { CascadeType.ALL })
+    @JsonBackReference
+    private Set<User> users;
+
+
     @Override
     public String getAuthority() {
         return SPRING_SECURITY_AUTHORITY_PREFIX + name;
+    }
+
+    public void addUser(User user) {
+        if(users == null)
+            users = new HashSet<>();
+        users.add(user);
     }
 }
