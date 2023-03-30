@@ -56,7 +56,7 @@ public class SecurityConfig {
 
         // autorizacijos filtras, kuris suparsina jwt tokena
         http.addFilterBefore(new JwtAuthorizationFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
-        http.cors();
+        http.cors().disable();
         return http.build();
     }
 
